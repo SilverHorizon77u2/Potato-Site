@@ -156,7 +156,7 @@ body.landing {
     gap: 8px;
     font-size: 20px;
     font-weight: bold;
-    color: #451a03;
+    color: #f6ede9;
     text-decoration: none;
 }
 
@@ -167,7 +167,7 @@ body.landing {
 }
 
 .navbar nav a {
-    color: #78350f;
+    color: #fbf6f3;
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
@@ -196,18 +196,18 @@ body.landing {
 }
 
 .hero h1 {
-    color: #451a03;
+    color: #cfc1ba;
     font-size: 44px;
     font-weight: bold;
     margin-top: 16px;
 }
 
 .hero h1 span {
-    color: #d97706;
+    color: #f4f2f1;
 }
 
 .hero p {
-    color: rgba(146, 64, 14, 0.8);
+    color: rgba(249, 241, 236, 0.8);
     font-size: 18px;
     max-width: 480px;
     margin: 12px auto 28px;
@@ -429,4 +429,141 @@ body.dashboard {
 .empty-state p {
     margin: 0;
     color: #8a6b58;
+}
+
+/* Dynamic Landing Background */
+
+body.landing {
+    position: relative;
+    isolation: isolate;
+    background: #fffbeb;
+}
+
+body.landing::before,
+body.landing::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: opacity 2s ease-in-out;
+}
+
+body.landing::before {
+    background-image: var(--bg-current);
+    opacity: 1;
+}
+
+body.landing::after {
+    background-image: var(--bg-next);
+    opacity: 0;
+}
+
+body.landing.fade-bg::before {
+    opacity: 0;
+}
+
+body.landing.fade-bg::after {
+    opacity: 1;
+}
+
+/* Dark transparent layer */
+.background-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: rgba(0, 0, 0, 0.9);
+    pointer-events: none;
+}
+
+
+/* Login Page */
+
+body.login-page {
+    margin: 0;
+    min-height: 100vh;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+.background-video {
+    position: fixed;
+    top: 0;
+    left: 13%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+
+.login-panel-wrap {
+    position: absolute;
+    left: 0%;
+    width: 50%;
+    height: 100vh;
+    filter: drop-shadow(20px 0 18px rgba(0, 0, 0, 0.35));
+}
+
+.login-panel {
+    position: relative;
+    width: 80%;
+    height: 100%;
+    background: #ffffff;
+
+    clip-path: polygon(
+        0 0,
+        100% 0,
+        82% 100%,
+        0 100%
+    );
+}
+
+.login-panel .card {
+    position: absolute;
+    left: 6%;
+    top: 50%;
+    transform: translateY(-50%);
+
+    width: 360px;
+    max-width: 360px;
+
+    padding: 0;
+    margin: 0;
+
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.login-panel .card {
+    width: 360px;
+    max-width: 360px;
+}
+
+.login-panel .card-header .logo {
+    font-size: 32px;
+}
+
+.login-panel .card-header h1 {
+    font-size: 28px;
+}
+
+.login-panel .card-header p {
+    font-size: 14px;
+}
+
+.login-panel .form-group {
+    margin-bottom: 16px;
+}
+
+.login-panel input[type="email"],
+.login-panel input[type="password"] {
+    height: 42px;
+}
+
+.login-panel .btn {
+    height: 46px;
+    font-size: 16px;
 }
