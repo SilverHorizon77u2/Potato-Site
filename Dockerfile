@@ -17,6 +17,9 @@ COPY . .
 RUN composer install --no-dev --optimize-autoloader
 RUN npm install && npm run build
 
+# Run storage link after dependencies are in place
+RUN php artisan storage:link
+
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 RUN echo 'server { \
