@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Log in · Booktato</title>
+    <title>Log in · BookTako</title>
     <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
 </head>
 <body class="login-page">
@@ -20,7 +20,7 @@
                 <div class="card-header">
                     <div class="logo">📚</div>
                     <h1>Welcome back</h1>
-                    <p>Log in to Booktato</p>
+                    <p>Log in to BookTako</p>
                 </div>
 
                 @if (session('status'))

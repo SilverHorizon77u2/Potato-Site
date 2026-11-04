@@ -63,4 +63,16 @@ class ChapterController extends Controller
         return redirect()->route('books.show', $book)
             ->with('success', 'Chapter updated.');
     }
+    /**
+     * Display the specified chapter.
+     */
+    public function show(Book $book, Chapter $chapter)
+    {
+        // Optional security check: make sure the chapter actually belongs to this book
+        if ($chapter->book_id !== $book->id) {
+            abort(404);
+        }
+
+        return view('chapters.show', compact('book', 'chapter'));
+    }
 }

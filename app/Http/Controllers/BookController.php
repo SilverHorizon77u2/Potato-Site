@@ -45,9 +45,19 @@ class BookController extends Controller
 
     public function show(Book $book)
     {
-        $this->authorizeOwner($book);
-        $book->load('chapters');
-        return view('books.show', compact('book'));
+    // Ensure security: make sure the logged-in user owns this book
+        if ($book->user_id !== auth()->id()) {
+            abort(403);
+        }
+
+        // Fetch user's books for the sidebar/tab lists
+        $books = auth()->user()->books()->withCount('chapters')->latest()->get();
+
+        // Return the main dashboard view, but pass $activeBook and switch the active tab context
+        return view('dashboard', [
+            'books' => $books,
+            'activeBook' => $book
+        ]);
     }
 
     private function authorizeOwner(Book $book)
