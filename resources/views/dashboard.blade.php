@@ -4,13 +4,179 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard · Potato-Site</title>
-    <link rel="stylesheet" href="{{ asset('css/sidebar-layout.css') }}">
     <style>
-        /* Simple tab visibility styles */
+        /* --- sidebar-layout.css styles --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #faf8f5;
+            color: #1f2937;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            min-height: 100vh;
+        }
+
+        /* Top Navbar */
+        .top-navbar {
+            background: #ffffff;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 0.85rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .brand-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #111827;
+        }
+
+        .user-profile-pill {
+            background-color: #f3f4f6;
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        /* Main Layout Grid */
+        .layout-container {
+            display: flex;
+            min-height: calc(100vh - 57px);
+        }
+
+        /* Left Sidebar */
+        .sidebar {
+            width: 230px;
+            background-color: #ffffff;
+            border-right: 1px solid #e5e7eb;
+            padding: 2rem 1.25rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background-color: #3b82f6;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-name {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: #4b5563;
+            margin-bottom: 1.5rem;
+        }
+
+        .btn-primary {
+            width: 100%;
+            background-color: #3b82f6;
+            color: #ffffff;
+            text-align: center;
+            padding: 0.65rem;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-decoration: none;
+            margin-bottom: 1.5rem;
+            transition: background-color 0.2s;
+            display: inline-block;
+        }
+
+        .btn-primary:hover {
+            background-color: #2563eb;
+        }
+
+        /* Sidebar Nav Links */
+        .sidebar nav {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.65rem 0.85rem;
+            color: #4b5563;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 6px;
+        }
+
+        .sidebar-link:hover {
+            background-color: #f3f4f6;
+            color: #111827;
+        }
+
+        .sidebar-link.active {
+            color: #2563eb;
+            background-color: #eff6ff;
+        }
+
+        .logout-btn {
+            width: 100%;
+            text-align: left;
+            background: none;
+            border: none;
+            color: #ef4444;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 0.65rem 0.85rem;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .logout-btn:hover {
+            background-color: #fef2f2;
+        }
+
+        /* Main Content Area */
+        .main-content {
+            flex: 1;
+            padding: 2.5rem 3rem;
+        }
+
+        .content-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .page-heading {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #111827;
+            margin-bottom: 1.5rem;
+        }
+
+        /* --- Local dashboard custom styles --- */
         .tab-content { display: none; }
         .tab-content.active { display: block; }
         
-        /* Profile styles kept locally or in your CSS */
         .profile-card { background: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 1.5rem 2rem; margin-bottom: 1.5rem; box-shadow: 0 1px 2px rgba(0,0,0,0.03); }
         .card-title { font-size: 1.15rem; font-weight: 700; color: #111827; margin-bottom: 0.25rem; }
         .card-desc { font-size: 0.875rem; color: #6b7280; margin-bottom: 1.25rem; }
@@ -51,7 +217,7 @@
                     Profile
                 </button>
 
-                <form method="POST" action="{{ route('logout') }}" style="margin-top: 1rem;">
+                <form method="POST" action="{{ route('logout') }}" style="margin-top: 1rem; width: 100%;">
                     @csrf
                     <button type="submit" class="logout-btn">Log Out</button>
                 </form>
@@ -79,11 +245,10 @@
 
                     @include('partials.books-list', ['books' => $books])
                 </div>
-                <!-- TAB 2.2: MANAGE SINGLE BOOK (Dynamic view) -->
+
                 <!-- TAB 4: MANAGE SINGLE BOOK -->
                 <div id="tab-manage-book" class="tab-content {{ isset($activeBook) ? 'active' : '' }}">
                     @if(isset($activeBook))
-                        <!-- Automatically highlight 'My Books' in sidebar when managing a book -->
                         <script>
                             document.addEventListener("DOMContentLoaded", function() {
                                 document.querySelectorAll('.sidebar nav button, .sidebar nav a').forEach(el => el.classList.remove('active'));
@@ -188,11 +353,9 @@
     <!-- Instant Tab Switching Script -->
     <script>
         function switchTab(tabName) {
-            // Hide all tabs including the manage book tab
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.sidebar nav button, .sidebar nav a').forEach(el => el.classList.remove('active'));
 
-            // Show target tab and highlight sidebar link
             document.getElementById('tab-' + tabName).classList.add('active');
             const btn = document.getElementById('btn-' + tabName);
             if (btn) btn.classList.add('active');
