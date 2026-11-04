@@ -190,6 +190,46 @@
             height: 46px;
             font-size: 16px;
         }
+        @media (max-width: 768px) {
+            .login-panel-wrap {
+                position: relative;
+                width: 100%;
+                height: 100vh;
+                left: 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                filter: none;
+            }
+
+            .login-panel {
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.95); /* Slight transparency so video shows softly behind it */
+                clip-path: none !important; /* Removes the diagonal cut on mobile */
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+
+            .login-panel .card {
+                position: relative;
+                left: auto;
+                top: auto;
+                transform: none;
+                width: 90%;
+                max-width: 380px;
+                background: #ffffff;
+                border: 1px solid #fef3c7;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+                padding: 24px;
+            }
+
+            .background-video {
+                left: 0 !important;
+                width: 100% !important;
+            }
+        }
     </style>
 </head>
 <body class="login-page">
